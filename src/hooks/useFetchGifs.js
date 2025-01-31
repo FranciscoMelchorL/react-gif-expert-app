@@ -4,12 +4,17 @@ import PropTypes from 'prop-types';
 
 export const useFetchGifs = (category) => {
     const [images, setImages] = useState([]);
-    const [isLoading, setisLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        getGifs(category).then(newImages => setImages(newImages));
-        setisLoading(false);
-    }, [ ]);
+    const getImages = async() => {
+        const newImages = await getGifs( category );
+        setImages(newImages);
+        setIsLoading(false);
+    }
+    
+    useEffect( () => {
+        getImages();
+    }, []);
 
     return {
         images,
